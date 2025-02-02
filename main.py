@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 
-num = 20
+import typer
 
-if num > 10:
-    print("num is greater than 10")
-else:
-    print("num is less than 10")
+app = typer.Typer()
+
+@app.command()
+def greet(name: str):
+    print(f"Hello {name}")
+
+@app.command()
+def goodbye(name: str, formal: bool = False):
+    if formal:
+        print(f"Goodbye Mr. {name}")
+    else:
+        print(f"Bye {name}")
+
+if __name__ == "__main__":
+    app()
