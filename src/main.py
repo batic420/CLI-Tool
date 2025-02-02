@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import typer
+import os
 
 app = typer.Typer()
 
@@ -14,6 +15,10 @@ def goodbye(name: str, formal: bool = False):
         print(f"Goodbye Mr. {name}")
     else:
         print(f"Bye {name}")
+
+@app.command()
+def mdir(directory: str="default"):
+    print(os.getcwd())
 
 if __name__ == "__main__":
     app()
