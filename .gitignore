@@ -1,2 +1,8 @@
 # environment variables
 .env
+
+# mac related unwanted files
+.DS_Store
+
+# testing directory
+testing/
