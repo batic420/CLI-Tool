@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from dotenv import load_dotenv
 import typer
 import os
@@ -8,9 +6,15 @@ from git.exc import GitCommandError, InvalidGitRepositoryError
 import shutil
 
 load_dotenv()
-app = typer.Typer()
+repo = typer.Typer()
 
-@app.command()
+@repo.command()
+def print():
+    """Test the connection of the git python module"""
+
+    typer.echo("Git module connected and accessible!")
+
+@repo.command()
 def clone(
     branch: str = typer.Option(
         "main",
@@ -39,7 +43,7 @@ def clone(
     except Exception as e:
         typer.echo(f"An unexpected error occurred: {e}")
 
-@app.command()
+@repo.command()
 def pull(
     branch: str = typer.Option(
         "main",
