@@ -13,6 +13,7 @@ def print():
     """Test the connection of the git python module"""
 
     typer.echo("Git module connected and accessible!")
+    typer.echo(f"Remote URL: {os.getenv('REPO_PATH')}")
 
 @repo.command()
 def clone(
@@ -24,7 +25,7 @@ def clone(
     """Clone an initial copy of the root-kit repo for your project"""
 
     try:
-        typer.echo(f"Cloning {os.getenv("REMOTE_URL")} on branch {branch}...")
+        typer.echo(f"Cloning {os.getenv("REPO_PATH")} on branch {branch}...")
 
         if os.path.exists(os.getenv("LOCAL_DIR")):
             typer.echo(f"Directory {os.getenv("LOCAL_DIR")} already exists. Deleting...")
@@ -53,13 +54,13 @@ def pull(
     """Pull new changes from the root-kit repo"""
 
     try:
-        typer.echo(f"Pulling from {os.getenv("REMOTE_URL")} on branch {branch}...")
+        typer.echo(f"Pulling from {os.getenv("REPO_PATH")} on branch {branch}...")
 
         repo = Repo(os.getenv("LOCAL_DIR"))
         origin = repo.remotes.origin
 
         origin.pull(branch)
-        typer.echo(f"Pulling from {os.getenv("REMOTE_URL")} on branch {branch} complete!")
+        typer.echo(f"Pulling from {os.getenv("REPO_PATH")} on branch {branch} complete!")
 
     except GitCommandError as e:
         typer.echo(f"Git command error: {e}")
