@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import typer
 import os
+import time
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
 import shutil
@@ -24,18 +25,23 @@ def clone(
 ):
     """Clone an initial copy of the root-kit repo for your project"""
 
+    repo_path = os.getenv("REPO_PATH")
+    local_dir = os.getenv("LOCAL_DIR")
     try:
-        typer.echo(f"Cloning {os.getenv("REPO_PATH")} on branch {branch}...")
+        if not all([repo_path, local_dir]):
+            raise ValueError("environment variables are missing!")
 
-        if os.path.exists(os.getenv("LOCAL_DIR")):
-            typer.echo(f"Directory {os.getenv("LOCAL_DIR")} already exists. Deleting...")
-            shutil.rmtree(os.getenv("LOCAL_DIR"))
+        if os.path.exists(local_dir):
+            shutil.rmtree(local_dir)
 
-        Repo.clone_from(
-            os.getenv("REMOTE_URL"), os.getenv("LOCAL_DIR"), branch=branch
-        )
-
-        typer.echo(f"Cloning to {os.getenv("LOCAL_DIR")} complete!")
+        for _ in range(5):
+            if not os.path.exists(local_dir):
+                break
+            time.sleep(0.1)
+        else:
+            raise RuntimeError(f"Failed to remove {local_dir}")
+        
+        Repo.clone_from(repo_path, local_dir, branch=branch)
     
     except InvalidGitRepositoryError as e:
         typer.echo(f"Invalid git repository: {e}")
