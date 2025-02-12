@@ -60,13 +60,18 @@ def pull(
     """Pull new changes from the root-kit repo"""
 
     try:
-        typer.echo(f"Pulling from {os.getenv("REPO_PATH")} on branch {branch}...")
-
         repo = Repo(os.getenv("LOCAL_DIR"))
         origin = repo.remotes.origin
 
-        origin.pull(branch)
-        typer.echo(f"Pulling from {os.getenv("REPO_PATH")} on branch {branch} complete!")
+        curr_commit = repo.head.commit.hexsha
+        new_pull = origin.pull(branch)[0]
+        change = new_pull.commit.hexsha != curr_commit
+
+        if change:
+            commit_msg = repo.head.commit.message.strip()
+            typer.echo(f"Changes pulled successfully: {commit_msg}")
+        else:
+            typer.echo("No changes to pull - repo is up-to-date!")
 
     except GitCommandError as e:
         typer.echo(f"Git command error: {e}")
