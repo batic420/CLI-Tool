@@ -9,14 +9,13 @@ cn = typer.Typer()
 
 @cn.command()
 def create(
-    composeFile = "docker-compose.yml",
-    command = "up -d"
+    composeFile = "../../docker-compose.yml",
 ):
     """Create a new root-kit container"""
 
     try:
         result = subprocess.run(
-            ["docker compose", "-f", composeFile, command ],
+            ["docker", "compose", "-f", composeFile, "up", "-d"],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
