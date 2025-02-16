@@ -6,7 +6,7 @@ from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
 import shutil
 
-load_dotenv()
+load_dotenv("../../.env")
 repo = typer.Typer()
 
 @repo.command()
@@ -77,3 +77,4 @@ def pull(
         typer.echo(f"Git command error: {e}")
     except Exception as e:
         typer.echo(f"An unexpected error occurred: {e}")
+
