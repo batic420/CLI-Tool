@@ -7,9 +7,12 @@ load_dotenv()
 client = docker.from_env()
 cn = typer.Typer()
 
+# TODO:
+# - Optimize code for commands inside a function
+
 @cn.command()
 def create(
-    composeFile = "../../docker-compose.yml",
+    composeFile = typer.Argument("../../docker-compose.yml", help="location + name of the YAML file used to create the container/s")
 ):
     """Create a new root-kit container"""
 
@@ -21,13 +24,13 @@ def create(
             stderr=subprocess.PIPE,
             text=True
         )
-        print(f"Container created!", result.stdout)
+        print("Container created!", result.stdout)
     except subprocess.CalledProcessError as e:
         print("An error occurred!", e.stderr)
 
 @cn.command()
 def delete(
-    serviceName: str = "mysql"
+    serviceName: str = typer.Argument("mysql", help="name of the service to delete")
 ):
     """Delete a root-kit container"""
 
@@ -45,7 +48,7 @@ def delete(
 
 @cn.command()
 def start(
-    serviceName: str = "mysql"
+    serviceName: str = typer.Argument("mysql", help="name of the service to start")
 ):
     """Start a root-kit container"""
 
@@ -63,7 +66,7 @@ def start(
 
 @cn.command()
 def stop(
-    serviceName: str = "mysql"
+    serviceName: str = typer.Argument("mysql", help="name of the service to stop")
 ):
     """Stop a root-kit container"""
 
