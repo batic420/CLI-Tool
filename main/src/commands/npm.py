@@ -6,14 +6,14 @@ pg = typer.Typer()
 
 @pg.command()
 def install(
-    workingDir: str = typer.Argument(os.getcwd(), help="directory to install the packages to")
+    working_dir: str = typer.Option(os.getcwd(), help="directory to install the packages to")
 ):
     """Install all used packages for root-kit"""
 
     try:
         result = subprocess.run(
             ["npm", "ci"],
-            cwd=workingDir
+            cwd=working_dir
         )
 
         print("Packages installed!", result.stdout)

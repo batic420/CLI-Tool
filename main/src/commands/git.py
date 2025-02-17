@@ -21,27 +21,31 @@ def clone(
     branch: str = typer.Option(
         "main",
         help="Branch to clone from",
+    ),
+    working_dir: str = typer.Option(
+        os.getcwd(),
+        help="directory to clone the repo to"
     )
 ):
     """Clone an initial copy of the root-kit repo for your project"""
 
     repo_path = os.getenv("REPO_PATH")
-    local_dir = os.getenv("LOCAL_DIR")
+
     try:
-        if not all([repo_path, local_dir]):
+        if not all([repo_path, working_dir]):
             raise ValueError("environment variables are missing!")
 
-        if os.path.exists(local_dir):
-            shutil.rmtree(local_dir)
+        if os.path.exists(working_dir):
+            shutil.rmtree(working_dir)
 
         for _ in range(5):
-            if not os.path.exists(local_dir):
+            if not os.path.exists(working_dir):
                 break
             time.sleep(0.1)
         else:
-            raise RuntimeError(f"Failed to remove {local_dir}")
+            raise RuntimeError(f"Failed to remove {working_dir}")
         
-        Repo.clone_from(repo_path, local_dir, branch=branch)
+        Repo.clone_from(repo_path, working_dir, branch=branch)
     
     except InvalidGitRepositoryError as e:
         typer.echo(f"Invalid git repository: {e}")
@@ -55,12 +59,16 @@ def pull(
     branch: str = typer.Option(
         "main",
         help="Branch to pull from",
+    ),
+    working_dir: str = typer.Option(
+        os.getcwd(),
+        help="directory to pull the changes to"
     )
 ):
     """Pull new changes from the root-kit repo"""
 
     try:
-        repo = Repo(os.getenv("LOCAL_DIR"))
+        repo = Repo(working_dir)
         origin = repo.remotes.origin
 
         curr_commit = repo.head.commit.hexsha

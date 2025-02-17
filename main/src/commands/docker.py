@@ -12,13 +12,13 @@ cn = typer.Typer()
 
 @cn.command()
 def create(
-    composeFile = typer.Argument("../../docker-compose.yml", help="location + name of the YAML file used to create the container/s")
+    compose_file = typer.Argument("../../docker-compose.yml", help="location + name of the YAML file used to create the container/s")
 ):
     """Create a new root-kit container"""
 
     try:
         result = subprocess.run(
-            ["docker", "compose", "-f", composeFile, "up", "-d"],
+            ["docker", "compose", "-f", compose_file, "up", "-d"],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -30,13 +30,13 @@ def create(
 
 @cn.command()
 def delete(
-    serviceName: str = typer.Argument("mysql", help="name of the service to delete")
+    service_name: str = typer.Argument("mysql", help="name of the service to delete")
 ):
     """Delete a root-kit container"""
 
     try:
         result = subprocess.run(
-            ["docker", "compose", "down", serviceName],
+            ["docker", "compose", "down", service_name],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -48,13 +48,13 @@ def delete(
 
 @cn.command()
 def start(
-    serviceName: str = typer.Argument("mysql", help="name of the service to start")
+    service_name: str = typer.Argument("mysql", help="name of the service to start")
 ):
     """Start a root-kit container"""
 
     try:
         result = subprocess.run(
-            ["docker", "compose", "start", serviceName],
+            ["docker", "compose", "start", service_name],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -66,13 +66,13 @@ def start(
 
 @cn.command()
 def stop(
-    serviceName: str = typer.Argument("mysql", help="name of the service to stop")
+    service_name: str = typer.Argument("mysql", help="name of the service to stop")
 ):
     """Stop a root-kit container"""
 
     try:
         result = subprocess.run(
-            ["docker", "compose", "stop", serviceName],
+            ["docker", "compose", "stop", service_name],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
