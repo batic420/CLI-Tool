@@ -6,7 +6,7 @@ from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
 import shutil
 
-load_dotenv("../../.env")
+load_dotenv("../.env")
 repo = typer.Typer()
 
 @repo.command()

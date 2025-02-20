@@ -1,0 +1,31 @@
+[project]
+name = "root-kit"
+version = "0.0.1"
+authors = [
+  { name="Basti", email="" },
+]
+description = "CLI Tool for installing Root-Kit Application Code"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "typer",
+    "gitpython",
+    "python-dotenv",
+    "docker",
+    "subprocess",
+    "os",
+    "shutil",
+    "time"
+]
+
+[project.urls]
+CLI = "https://github.com/batic420/CLI-Tool.git"
+Application = "https://github.com/batic420/Root-Kit.git"
+
+[project.scripts]
+root-kit = "root-kit.main:app"
