@@ -2,7 +2,7 @@
 
 import typer
 import os
-from commands import git, docker, npm
+from .commands import git, docker, npm
 
 rt = typer.Typer()
 

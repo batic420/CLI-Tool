@@ -17,7 +17,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "root-kit=root-kit.main:app"
+            "root-kit=src.cli:app"
         ]
     }
 )
