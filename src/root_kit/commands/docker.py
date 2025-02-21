@@ -5,7 +5,7 @@ import subprocess
 
 load_dotenv()
 client = docker.from_env()
-cn = typer.Typer()
+cn = typer.Typer(help="Manage the underlying docker container for the root-kit mysql database")
 
 # TODO:
 # - Optimize code for commands inside a function

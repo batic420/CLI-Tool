@@ -7,7 +7,7 @@ from git.exc import GitCommandError, InvalidGitRepositoryError
 import shutil
 
 load_dotenv("../.env")
-repo = typer.Typer()
+repo = typer.Typer(help="Clone the root-kit repo as a single instance or pull new changes")
 
 @repo.command()
 def print():

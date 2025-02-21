@@ -2,7 +2,7 @@ import typer
 import subprocess
 import os
 
-pg = typer.Typer()
+pg = typer.Typer(help="Install the required npm packages for root-kit manually with a single command")
 
 @pg.command()
 def install(

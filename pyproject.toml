@@ -28,4 +28,4 @@ CLI = "https://github.com/batic420/CLI-Tool.git"
 Application = "https://github.com/batic420/Root-Kit.git"
 
 [project.scripts]
-root-kit = "root_kit.cli:app"
+root-kit = "root_kit.cli:rt"
