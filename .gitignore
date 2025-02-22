@@ -12,3 +12,6 @@ __pycache__/
 
 # local testing folder for package
 src/root_kit.egg-info/
+
+# distribution folder
+dist/
