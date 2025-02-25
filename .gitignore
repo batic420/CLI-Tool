@@ -15,3 +15,6 @@ src/root_kit.egg-info/
 
 # distribution folder
 dist/
+
+# test YAML for modular deployments
+test.yaml
