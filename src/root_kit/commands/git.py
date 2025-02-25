@@ -1,10 +1,11 @@
-from dotenv import load_dotenv
 import typer
 import os
 import time
+import shutil
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError
-import shutil
+from dotenv import load_dotenv
+from root_kit.utils.template import generate_template
 
 load_dotenv("../.env")
 repo = typer.Typer(help="Clone the root-kit repo as a single instance or pull new changes")
@@ -15,6 +16,11 @@ def print():
 
     typer.echo("Git module connected and accessible!")
     typer.echo(f"Remote URL: {os.getenv('REPO_PATH')}")
+    try:
+        generate_template(custom_key='TEST', file_path='../../test.yaml')
+        typer.echo("Template generated successfully!")
+    except Exception as e:
+        typer.echo(f"Template generation failed with error: {e}")
 
 @repo.command()
 def clone(

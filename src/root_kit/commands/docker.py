@@ -12,7 +12,7 @@ cn = typer.Typer(help="Manage the underlying docker container for the root-kit m
 
 @cn.command()
 def create(
-    compose_file = typer.Option("../docker-compose.yml", help="location + name of the YAML file used to create the container/s")
+    compose_file = typer.Option("../../compose.yaml", help="location + name of the YAML file used to create the container/s")
 ):
     """Create a new root-kit container"""
 

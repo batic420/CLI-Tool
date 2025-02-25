@@ -26,7 +26,7 @@ def deploy(
         os.getcwd(),
         help="directory to clone the repo to"
     ),
-    compose_file = typer.Option("../../docker-compose.yml", help="location + name of the YAML file used to create the container/s")
+    compose_file = typer.Option("../../compose.yaml", help="location + name of the YAML file used to create the container/s")
 ):
     """Deploy the root-kit project"""
 
