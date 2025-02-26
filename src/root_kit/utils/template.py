@@ -28,7 +28,7 @@ def generate_template(
         custom_key: str,
         file_path: str
 ):
-    f = open(file_path, "x")
+    f = open(file_path, "w")
 
     if f:
         f.write(template.render(custom_key=custom_key))

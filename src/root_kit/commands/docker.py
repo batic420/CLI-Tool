@@ -1,7 +1,10 @@
 import typer
-from dotenv import load_dotenv
 import docker
 import subprocess
+import uuid
+
+from dotenv import load_dotenv
+from root_kit.utils.template import generate_template
 
 load_dotenv()
 client = docker.from_env()
@@ -12,11 +15,22 @@ cn = typer.Typer(help="Manage the underlying docker container for the root-kit m
 
 @cn.command()
 def create(
-    compose_file = typer.Option("../../compose.yaml", help="location + name of the YAML file used to create the container/s")
+    compose_file = typer.Option(
+        None, 
+        "--file", 
+        "-f", 
+        help="supply the name and location of a custom docker-compose file"
+    ),
+    random_key: str = typer.Option(
+        uuid.uuid4().hex[:6].upper(),
+        "--key",
+        "-k",
+        help="custom key for a unique service name per instance -> REMEMBER YOUR KEY!"
+    ) 
 ):
     """Create a new root-kit container"""
 
-    try:
+    if compose_file:
         result = subprocess.run(
             ["docker", "compose", "-f", compose_file, "up", "-d"],
             check=True,
@@ -24,9 +38,19 @@ def create(
             stderr=subprocess.PIPE,
             text=True
         )
-        print("Container created!", result.stdout)
-    except subprocess.CalledProcessError as e:
-        print("An error occurred!", e.stderr)
+        print(f"Container created with custom YAML has been created", result.stdout)
+    else:
+        generate_template(custom_key=random_key, file_path="../../compose-${random_key}.yaml")
+        result = subprocess.run(
+            ["docker", "compose", "-f", "../../compose-${random_key}.yaml", "up", "-d"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        print(f"Container created!", result.stdout)
+
+
 
 @cn.command()
 def delete(
