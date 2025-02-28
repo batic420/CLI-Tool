@@ -40,15 +40,21 @@ def create(
         )
         print(f"Container created with custom YAML has been created", result.stdout)
     else:
-        generate_template(custom_key=random_key, file_path="../../compose-${random_key}.yaml")
+        # 
+        # TODO:
+        # - debug deployment to always use custom yaml and not template
+        #
+        unique_yaml = "../../compose-" + random_key + ".yaml"
+        generate_template( custom_key=random_key, file_path=unique_yaml)
         result = subprocess.run(
-            ["docker", "compose", "-f", "../../compose-${random_key}.yaml", "up", "-d"],
+            ["docker", "compose", "up", "-f", unique_yaml, "-d"],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
         )
         print(f"Container created!", result.stdout)
+        print(f"Your custom id for the service: msyql-{random_key}")
 
 
 
